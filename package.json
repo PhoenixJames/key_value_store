@@ -1,0 +1,32 @@
+{
+  "name": "key_value_store",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PhoenixJames/key_value_store.git"
+  },
+  "author": "Thet Paing Oo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PhoenixJames/key_value_store/issues"
+  },
+  "homepage": "https://github.com/PhoenixJames/key_value_store#readme",
+  "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "http-error": "0.0.6",
+    "http-errors": "^1.7.3",
+    "moment": "^2.24.0",
+    "mongodb": "^3.5.4",
+    "mongoose": "^5.9.2",
+    "nodemon": "^2.0.2"
+  }
+}
