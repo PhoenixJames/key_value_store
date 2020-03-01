@@ -8,8 +8,7 @@ const {
 const getKeyValue = async function(req, res) {
   const { key } = req.params;
   let { timestamp } = req.query;
-  const datetime = timestamp != null 
-    ? new Date(timestamp * 1000) : new Date();
+  const datetime = utils.convertTimestampToDateTime(timestamp);
   debug({ query: timestamp });
   let ret = await KeyValue.aggregate([
     {
@@ -37,7 +36,7 @@ const getKeyValue = async function(req, res) {
   ]);
   debug(ret);
   if (ret) {
-    ret = ret.find(e => e.key == key) || {};
+    ret = ret.find(e => e._id == key) || {};
     const output = {
       key: ret._id,
       value: ret.value,
