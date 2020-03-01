@@ -1,16 +1,28 @@
 const debug = require('debug')('DEBUG');
 const moment = require('moment');
+const utils = require('./utils');
 const {
   KeyValue
 } = require('../database/schema');
 
 const getKeyValue = async function(req, res) {
   const { key } = req.params;
+  let { timestamp } = req.query;
+  const datetime = timestamp != null 
+    ? new Date(timestamp * 1000) : new Date();
+  debug({ query: timestamp });
   let ret = await KeyValue.aggregate([
     {
       $match: {
-        key,
-      }
+        $and: [
+          {
+            key,
+          },
+          {
+            createdAt: { $lte: datetime },
+          }
+        ],
+      },
     },
     {
       $sort: { 'createdAt': -1 }
@@ -25,10 +37,11 @@ const getKeyValue = async function(req, res) {
   ]);
   debug(ret);
   if (ret) {
+    ret = ret.find(e => e.key == key) || {};
     const output = {
-      key: ret[0]._id,
-      value: ret[0].value,
-      timestamp: ret[0].timestamp.getTime(),
+      key: ret._id,
+      value: ret.value,
+      timestamp: utils.convertTimeStamp(ret.timestamp),
     };
     return res.status(200).send(output);
   }
@@ -46,9 +59,14 @@ const postKeyValue = function(req, res) {
     createdAt: timestamp
   }).save(function (err, data) {
     if(err) {
-      return res.status(404).send('error');
+      return res.status(404).send(err);
     }
-    return res.status(200).send(data);
+    const output = {
+      key: data.key,
+      value: data.value,
+      timestamp: utils.convertTimeStamp(data.createdAt),
+    }
+    return res.status(200).send(output);
   })
 }
 

@@ -1,13 +1,14 @@
 var http = require('http');
 var createError = require('http-errors');
+var bodyParser = require('body-parser');
 require('./database/connection');
 var express = require('express');
 var debug = require('debug')
 var app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-
+// app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
 // Routes
 var keyValueRoute = require('./routes/KeyValueRoute');
 app.use('/api', keyValueRoute);
