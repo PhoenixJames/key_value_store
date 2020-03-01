@@ -6,5 +6,5 @@ mongoose.connect('mongodb+srv://admin_user:passw0rd@cluster0-8jy1j.mongodb.net/k
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  debug('success');
+  debug('Mongo database connection is successful.');
 });
