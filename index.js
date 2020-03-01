@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // Routes
 var keyValueRoute = require('./routes/KeyValueRoute');
-app.use('/api', keyValueRoute);
+app.use('/api/object', keyValueRoute);
 
 app.use(function(req, res, next) {
   next(createError(404));
